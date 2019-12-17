@@ -1,0 +1,67 @@
+body {
+  background: #F0F3F8;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+.button {
+  border-radius: 3px;
+  padding: 10px 30px;
+  text-decoration: none;
+
+  &.primary {
+    background: $blue;
+    color: $white;
+
+    &:hover {
+      background: darken($blue, 10);
+    }
+  }
+}
+
+.card {
+  background: $white;
+  margin: auto;
+  margin-bottom: $big-spacing;
+  max-width: 1000px;
+  padding: $base-spacing;
+
+  &.no-pad {
+    padding: 0;
+  }
+
+  &.bigger {
+    max-width: 1400px;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 5px 10px 0 rgba(#6892FF, 0.25);
+}
+
+.tab-menu {
+  border-bottom: 3px solid #a6afbe;
+  display: flex;
+  margin: auto;
+  margin-bottom: $base-spacing;
+  padding: 0 $small-spacing;
+
+  .tab-menu__item {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+    margin-right: $base-spacing;
+    padding: $small-spacing 0;
+
+    &.selected {
+      font-weight: 600;
+      box-shadow: 0px 3px 0 0 $blue;  
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,30 @@
+// Spacing
+$base-spacing: 30px;
+$small-spacing: $base-spacing / 2;
+$big-spacing: $base-spacing * 2;
+$base-z-index: 0;
+
+// Colors
+$red: #E03F3F;
+$logo-red: #C42701;
+$light-blue: #38baff;
+$blue: #007AFF;
+$blue-30: rgba($blue, .3);
+$secondary-blue: #0870B7;
+$dark-blue: #344BA0;
+$green: #4AC389;
+$pale-green: #C5E2BC;
+$pale-blue: #C9DEFF;
+$pale-orange: #EAAF7A;
+
+
+// Grayscale
+$blue-dark-gray: #70889E;
+$dark-gray: #444;
+$medium-gray: lighten($dark-gray, 20%);
+$blue-gray: #A6AFBE;
+$light-gray: #dedede;
+$lighter-gray: lighten($light-gray, 5%);
+$blue-black: #35363c;
+$white: #fff;
+$black: #000;

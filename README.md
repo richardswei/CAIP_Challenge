@@ -1,24 +1,15 @@
 # README
+## ClearAccessIP Coding Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Basic Instructions
+1. Fork this repo
+2. Instructions for the challenge are on the home page of the app
+2. Create a new branch for your code
+3. Create and Merge a Pull Request from your branch with changes to YOUR master
+4. Send the URL to your forked repo
+<!-- 
+### Setting up the app
+After creating your own fork.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Clone the repo
+2. run `rails server` -->

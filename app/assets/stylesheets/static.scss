@@ -1,0 +1,39 @@
+.home {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: $small-spacing;
+
+  &__header {
+    margin-bottom: $base-spacing;
+  }
+
+  &__body {
+    align-items: center;
+    background: $white;
+    border-radius: 3px;
+    box-shadow: 0 5px 10px 0 rgba(#6892FF, 0.25);
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    padding: $base-spacing;
+
+    ul {
+      width: 100%;
+
+      li {
+        margin-bottom: 5px;
+      }
+    }
+
+    h2 {
+      font-family: sans-serif;
+    }
+  }
+}
+
+span.snip {
+  background: $lighter-gray;
+  color: $red;
+  padding: 0 5px;
+}

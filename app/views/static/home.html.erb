@@ -1,0 +1,38 @@
+<div class="home">
+  <div class="home__header">
+    <%= image_tag 'logo-narrow.png' %>
+  </div>
+
+  <div class="home__body">
+    <h2>Coding Challenge</h2>
+
+    <p><%= link_to 'Here', 'https://www.figma.com/file/cT74k7xmOdNHTI5XoPm4mf/CAIP_Challenge?node-id=0%3A1' %> is a Figma for you to follow to complete this challenge. Feel free to change existing code if need be.</p>
+
+    <ul>
+      <li>Follow provided Figma to style the app.</li>
+      <li>Get a YouTube API key and add it to <span class="snip">youtube_interactor.rb</span></li>
+      <li>Add a header with your name as a link to root path</li>
+      <li>Add a footer</li>
+      <h3>Tab 1</h3>
+      <li>Create an accordion and display the data(<span class="snip">@videos</span>) as represented in the Figma.</li>
+      <li>Accordion item should open clicking anywhere in the row or on the arrow</li>
+      <li>Opening another pane will close all others</li>
+      <li>The Search bar should be a front end filter being able to search by title, tag or description (Unless going for bonus points).</li>
+      <h3>Tab 2</h3>
+      <li>Create a D3 stacked bar chart with view count and like count.</li>
+      <li>The Y axis labels should have tick values</li>
+      <li>The X axis labels should be video title</li>
+      <li>On hover show breakdown for views and likes</li>
+      <h3>Bonus Points:</h3>
+      <li>Have the search bar query the YouTube Search API (Only need 5 videos)</li>
+      <li>Have you YouTube Search API be an AJAX call (No page reload)</li>
+      <li>"Reset" should reset to the query to 'Ruby on Rails'</li>
+      <li>Persist active tab on page reload</li>
+      <li>Clicking the thumbnail of the video will take you to YouTube</li>
+      <li>Paginate more results</li>
+      <h3>Super Bonus Point</h3>
+      <li>Assuming you've connected YouTube Search API get the tags for the top 50 videos and create a second D3 chart simlar to <%= link_to 'this', 'https://tylernwolf.com/uxwords/index.html' %></li>
+    </ul>
+    <%= link_to 'Get Started!', page_path, class: 'button primary' %>
+  </div>
+</div>

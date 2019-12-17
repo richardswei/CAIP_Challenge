@@ -1,0 +1,25 @@
+<div class="page">
+  <div class="page__header">
+    Page
+  </div>
+
+  <div class="tabs">
+    <div class="tab-menu">
+      <div class="tab-menu__item selected" target="#page1">Page 1</div>
+      <div class="tab-menu__item" target="#page2">Page 2</div>
+    </div>
+  
+    <div class="tab-content " id="page1">
+      <div class="card box-shadow">
+        <%= @videos %>
+      </div>
+    </div>
+  
+    <div class="tab-content hidden" id="page2">
+      <div class="card box-shadow">
+        page2
+      </div>
+    </div>
+  </div>
+
+</div>
