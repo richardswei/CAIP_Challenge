@@ -27,3 +27,10 @@ img {
 .card-header[aria-expanded="true"]:before {
   content: "\f106";
 }
+
+
+#searchBar {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}

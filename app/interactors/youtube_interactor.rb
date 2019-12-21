@@ -1,8 +1,5 @@
 class YoutubeInteractor
-
-  # in a real world scenario I'd probably put this in a ENV variable. Wouldn't want others to hijack our API Key
-  KEY = "AIzaSyBAln3nc-CSnBuJuOK_l1su7gxgpIdX5xk" 
-  BASE_URI = 'https://www.googleapis.com/youtube/v3/'.freeze
+  include ApplicationHelper
 
   def initialize(query = '', ids = [])
     @q = query
@@ -18,4 +15,15 @@ class YoutubeInteractor
     res = HTTParty.get(_url).body
     JSON.parse(res)
   end
+
+  def search
+    searchQuery = @q
+    searchText = searchQuery.gsub(/ /, '%20')
+    # we don't use page token unless we paginate
+    pageTokenParam = false ? `&pageToken=` : '';
+    _url = "#{BASE_URI}search?q=#{searchText}#{pageTokenParam}&type=video&part=id&key=#{KEY}"
+    res = HTTParty.get(_url).body
+    JSON.parse(res)
+  end
+
 end

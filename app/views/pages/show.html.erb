@@ -1,9 +1,20 @@
 <div class="page">
   <div class="page__header">
-    Richard
+    <h1>Richard Samuel Wei</h1>
   </div>
   <div class="page__header">
-    SEARCH TERM
+    <div class="input-group" >
+      <div id="searchBar">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="searchTag">Search</span>
+        </div>
+        <input id="search" type="text" value="Ruby on Rails" name="search" />
+        <span class="input-group-append">
+          <button type="submit" onClick="handleSubmit(this)" class="btn btn-primary">Submit</button>
+          <button type="button" onClick="handleReset(this)" class="btn btn-secondary">Reset</button>
+        </span>
+      </div>
+    </div>
   </div>
 
   <div class="tabs">
@@ -15,7 +26,6 @@
     <!-- ACCORDION -->
     <div class="tab-content " id="page1">
       <div class="accordion" id="videoAccordion">
-      
       <% @videos["items"].each_with_index do |video, idx| %>
         <div class="card box-shadow">
           <button class="card-header btn " type="button" data-toggle="collapse" data-target="#<%="collapse#{idx}"%>" aria-expanded="true" aria-controls="<%="collapse#{idx}"%>">
@@ -37,10 +47,12 @@
             <div class="container">
               <div class="row">
                 <div class="col-3">
-                  <img src=<%= video["snippet"]["thumbnails"]["high"]["url"] %>></img>
+                  <a href="https://www.youtube.com/watch?v=<%=video["id"]%>">
+                    <img src=<%= video["snippet"]["thumbnails"]["high"]["url"] %>></img>
+                  </a>
                 </div>
                 <div class="col-9">
-                  <div><%= simple_format(video["snippet"]["description"]) %></div>
+                  <div><%= simple_format(video["snippet"]["description"] ? video["snippet"]["description"] : '') %></div>
                 </div>
               </div>
               <div class="row">
@@ -55,9 +67,12 @@
                 <div class="col-6">
                   <label for="tags" class="text-muted">TAGS</label>
                   <div id="tags">
-                    <% video["snippet"]["tags"].each_with_index do |tag, tag_idx| %>
-                      <span><%= tag_idx!=0 ? ", #{tag}" : "#{tag}"%></span>
+                    <% if !video["snippet"]["tags"].nil? %>
+                      <% video["snippet"]["tags"].each_with_index do |tag, tag_idx| %>
+                        <span><%= tag_idx!=0 ? ", #{tag}" : "#{tag}"%></span>
+                      <% end %>
                     <% end %>
+
                   </div>
                 </div>
               </div>
@@ -71,111 +86,32 @@
   <!-- GRAPH -->
     <div class="tab-content hidden" id="page2">
       <div class="card box-shadow">
+        <!-- It feels wrong to be using a stacked bar chart... maybe a grouped bar chart is more appropo -->
         <div id="videoChart"></div>
       </div>
     </div>
   </div>
 </div>
 <script>
-  function buildChart(data) {
-    let margin = {top: 20, right: 50, bottom: 150, left: 100};
-    let width = 960 - margin.left - margin.right;
-    let height = 500 - margin.top - margin.bottom;
+  // building barchart data
+  function handleSubmit(event) {
+      
+      Rails.ajax({
+        url: "/page/",
+        type: "GET",
+        data: "query="+document.getElementById('search').value,
+        success: function(data) {
+        }
+      });
+      
+  }
 
-    // List of subgroups = header of the csv files = soil condition here
-    let categories = ["likeCount","viewCount"];
-    let titles = data.map((video) => video.title)
+  function handleReset(event) {
+    document.getElementById('search').value = "Ruby on Rails";
+  }
 
-    // append the svg object to the body of the page
-    var svg = d3.select("#videoChart")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // Add X axis
-    var x = d3.scaleBand()
-        .domain(titles)
-        .range([0, width])
-        .padding([0.2])
-
-
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).tickSizeOuter(0))
-      .selectAll("text")
-        .attr("text-anchor", "end")
-        .attr("transform", "translate(-10, 0) rotate(-25)");
-    const maxVal = Math.max(...data.map((video) => 
-      parseInt(video.likeCount)+parseInt(video.viewCount)))
-
-    // Add Y axis
-    var y = d3.scaleSqrt()
-      .domain([0,maxVal])
-      .range([ height, 0 ]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
-
-    var color = d3.scaleOrdinal()
-      .domain(categories)
-      .range(['#e41a1c','#377eb8']);
-    
-    var stackedData = d3.stack()
-       .keys(categories)(data);
-    console.log(stackedData)
-
-    var tooltip = d3.select("body")
-        .append("div")
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("background-color", "black")
-        .style("border-radius", "4px")
-        .style("font-size", "0.8em")
-        .style("padding", "1em")
-        .style("color", "white")
-        .style("visibility", "hidden");
-
-    // Show the bars
-      svg.append("g")
-        .selectAll("g")
-        // Enter in the stack data = loop key per key = group per group
-        .data(stackedData)
-        .enter().append("g")
-          .attr("fill", function(d) { return color(d.key); })
-          .selectAll("rect")
-          // enter a second time = loop subgroup per subgroup to add all rectangles
-          .data(function(d) { return d; })
-          .enter().append("rect")
-            .attr("x", function(d) { return x(d.data.title); })
-            .attr("y", function(d) { return y(d[1]); })
-            .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-            .attr("width",x.bandwidth())
-
-          svg.selectAll("rect")  
-            .on("mouseover", function(d){
-              const viewCount = d.data.viewCount;
-              const likeCount = d.data.likeCount;
-              
-              const tip = `View Count: ${viewCount} <br>Like Count: ${likeCount}`;
-              tooltip.html(tip)
-              return tooltip.style("visibility", "visible");})
-            .on("mousemove", function(d){
-              return tooltip
-                .style("top",(d3.event.pageY-30)+"px")
-                .style("left",(d3.event.pageX+20)+"px");})
-                .style("color", 'red')
-            .on("mouseout", function(d){
-              return tooltip.style("visibility", "hidden");});
-    }
-
-
-
-
-  <% 
-    stats = @videos["items"].map { |video| video["statistics"].merge({"title" => video["snippet"]["title"]}) }
-    
-  %>
+  <% stats = @videos["items"].map { |video| video["statistics"].
+    merge({"title" => video["snippet"]["title"]}) } %>
   let videoStats = <%= stats.to_json.html_safe %>;
   buildChart(videoStats)
 </script>
