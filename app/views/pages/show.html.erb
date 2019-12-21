@@ -1,73 +1,74 @@
 <div class="page">
   <div class="page__header">
-    Page
+    Richard
+  </div>
+  <div class="page__header">
+    SEARCH TERM
   </div>
 
   <div class="tabs">
     <div class="tab-menu">
-      <div class="tab-menu__item selected" target="#page1">Page 1</div>
-      <div class="tab-menu__item" target="#page2">Page 2</div>
+      <div class="tab-menu__item selected" target="#page1">ACCORDION</div>
+      <div class="tab-menu__item" target="#page2">GRAPH</div>
     </div>
-  
+    
+    <!-- ACCORDION -->
     <div class="tab-content " id="page1">
       <div class="accordion" id="videoAccordion">
-        
-        <% @videos["items"].each_with_index do |video, idx| %>
-          <div class="card">
-            <button class="card-header btn <%="#{idx==0 ? '': 'collapsed'}" %>" type="button" data-toggle="collapse" data-target="#<%="collapse#{idx}"%>" aria-expanded="true" aria-controls="<%="collapse#{idx}"%>">
-              <div class="container">
-                <div class="row">
-                  <div class='col-4 subtitle'>
-                    <%= video["snippet"]["title"]%>
-                  </div>
-                  <div class='col-4 subtitle'>
-                    <%= video["snippet"]["channelTitle"]%>
-                  </div>
-                  <div class='col-4'>
-                    <%= DateTime.parse(video["snippet"]["publishedAt"]).strftime("%B %d, %Y")%>
-                  </div>
+      
+      <% @videos["items"].each_with_index do |video, idx| %>
+        <div class="card box-shadow">
+          <button class="card-header btn " type="button" data-toggle="collapse" data-target="#<%="collapse#{idx}"%>" aria-expanded="true" aria-controls="<%="collapse#{idx}"%>">
+            <div class="container">
+              <div class="row rowHeader">
+                <div class='col-4 subtitle'>
+                  <%= video["snippet"]["title"]%>
+                </div>
+                <div class='col-4 subtitle'>
+                  <%= video["snippet"]["channelTitle"]%>
+                </div>
+                <div class='col-4'>
+                  <%= DateTime.parse(video["snippet"]["publishedAt"]).strftime("%B %d, %Y")%>
                 </div>
               </div>
-            </button>
-            <div class="card-body collapse <%="#{idx==0 ? 'show': ''}" %>" data-parent="#videoAccordion" id=<%="collapse#{idx}"%>>
-              <div class="container">
-                <div class="row">
-                  <div class="col-3">
-                    <img src=<%= video["snippet"]["thumbnails"]["high"]["url"] %>></img>
-                  </div>
-                  <div class="col-9">
-                    <div><%= simple_format(video["snippet"]["description"]) %></div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-3">
-                    <label for="viewCount" class="text-muted">VIEW COUNT</label>
-                    <div id="viewCount"><%= video["statistics"]["viewCount"] %></div>
-                  </div>
-                  <div class="col-3">
-                    <label for="likeCount" class="text-muted">LIKE COUNT</label>
-                    <div id="likeCount"><%= video["statistics"]["likeCount"] %></div>
-                  </div>
-                  <div class="col-6">
-                    <label for="tags" class="text-muted">TAGS</label>
-                    <div id="tags">
-                      <% video["snippet"]["tags"].each do |tag| %>
-                        <span><%= tag %>,</span>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div><%= video %></div> -->
-
-              
             </div>
+          </button>
+          <div class="card-body collapse " data-parent="#videoAccordion" id=<%="collapse#{idx}"%>>
+            <div class="container">
+              <div class="row">
+                <div class="col-3">
+                  <img src=<%= video["snippet"]["thumbnails"]["high"]["url"] %>></img>
+                </div>
+                <div class="col-9">
+                  <div><%= simple_format(video["snippet"]["description"]) %></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <label for="viewCount" class="text-muted">VIEW COUNT</label>
+                  <div id="viewCount"><%= video["statistics"]["viewCount"] %></div>
+                </div>
+                <div class="col-3">
+                  <label for="likeCount" class="text-muted">LIKE COUNT</label>
+                  <div id="likeCount"><%= video["statistics"]["likeCount"] %></div>
+                </div>
+                <div class="col-6">
+                  <label for="tags" class="text-muted">TAGS</label>
+                  <div id="tags">
+                    <% video["snippet"]["tags"].each_with_index do |tag, tag_idx| %>
+                      <span><%= tag_idx!=0 ? ", #{tag}" : "#{tag}"%></span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>  
           </div>
-        <% end %>
+        </div>
+      <% end %>
       </div>
-
     </div>
-  
+
+  <!-- GRAPH -->
     <div class="tab-content hidden" id="page2">
       <div class="card box-shadow">
         page2
