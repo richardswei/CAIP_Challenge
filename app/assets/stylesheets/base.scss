@@ -22,9 +22,9 @@ body {
 .card {
   background: $white;
   margin: auto;
-  margin-bottom: $big-spacing;
+  /*margin-bottom: $big-spacing;*/
   max-width: 1000px;
-  padding: $base-spacing;
+  /*padding: $base-spacing;*/
 
   &.no-pad {
     padding: 0;

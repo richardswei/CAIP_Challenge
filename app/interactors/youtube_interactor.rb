@@ -1,7 +1,5 @@
 class YoutubeInteractor
-
-  KEY = 
-  BASE_URI = 'https://www.googleapis.com/youtube/v3/'.freeze
+  include ApplicationHelper
 
   def initialize(query = '', ids = [])
     @q = query
@@ -17,4 +15,15 @@ class YoutubeInteractor
     res = HTTParty.get(_url).body
     JSON.parse(res)
   end
+
+  def search
+    searchQuery = @q
+    searchText = searchQuery.gsub(/ /, '%20')
+    # we don't use page token unless we paginate
+    pageTokenParam = false ? `&pageToken=` : '';
+    _url = "#{BASE_URI}search?q=#{searchText}#{pageTokenParam}&type=video&part=id&key=#{KEY}"
+    res = HTTParty.get(_url).body
+    JSON.parse(res)
+  end
+
 end
